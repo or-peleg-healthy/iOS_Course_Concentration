@@ -18,13 +18,17 @@ class ViewController: UIViewController {
         }
     }
     @IBOutlet weak var flipCountLabel: UILabel!
-            
+    
     @IBOutlet var cardButtons: [UIButton]!
     
+    
+    // MARK: Handle Card Touch Behavior
+    
     @IBAction func touchCard(_ sender: UIButton) {
-        flipCount += 1
         if let cardNumber = cardButtons.firstIndex(of: sender){
-            game.chooseCard(at: cardNumber)
+            if !game.chooseCard(at: cardNumber){
+                flipCount += 1
+            }
             updateViewFromModel()
         }else{
             print("chosen card is not in card buttons")
@@ -47,14 +51,17 @@ class ViewController: UIViewController {
             else{
                 button.setTitle("", for: UIControl.State.normal)
                 button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                if card.isMatched{
+                    button.isEnabled = false
+                }
             }
         }
         
         func emoji(for card: Card) -> String {
             if emoji_dict[card.identifier] == nil {
                 if emojiChoices.count > 0 {
-                let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
-                emoji_dict[card.identifier] = emojiChoices.remove(at: randomIndex)
+                    let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
+                    emoji_dict[card.identifier] = emojiChoices.remove(at: randomIndex)
                 }
             }
             return emoji_dict[card.identifier] ?? "?"

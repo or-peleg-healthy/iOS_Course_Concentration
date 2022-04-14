@@ -14,7 +14,11 @@ class Concentration_Demo
     
     var indexOfOneAndOnlyFaceUpCard: Int?
     
-    func chooseCard(at index: Int){
+    func chooseCard(at index: Int) -> Bool{
+        var WasAlreadyFacedup = false
+        if cards[index].isFaceUp == true{
+            WasAlreadyFacedup = true
+        }
         if !cards[index].isMatched{
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 if cards[matchIndex].identifier == cards[index].identifier{
@@ -32,6 +36,7 @@ class Concentration_Demo
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
+        return WasAlreadyFacedup
     }
     init(numberOfPairsOfCards: Int){
         for _ in 1...numberOfPairsOfCards{
