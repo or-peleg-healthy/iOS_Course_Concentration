@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     
     @IBAction func NewGame(_ sender: UIButton) {
         game = Concentration_Demo(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
-        emojiChoices = ["👻", "🧠", "👽", "🫁", "💩", "🫀", "👣", "🫦", "🦷", "👃🏻"]
+        emojiChoices = Theme.getRandomTheme()
         ScoreLabel.text = ""
         flipCountLabel.text = "Flips :0"
         for button in cardButtons{
@@ -53,7 +53,6 @@ class ViewController: UIViewController {
     }
     
     var emojiChoices = Theme.getRandomTheme()
-//    var emojiChoices = ["👻", "🧠", "👽", "🫁", "💩", "🫀", "👣", "🫦", "🦷", "👃🏻"]
     
     var emoji_dict = [Int:String]()
     

@@ -37,7 +37,9 @@ class Concentration_Demo
                 }
                 else
                 {
-                    Score -= 1
+                    if cards[index].wasFlippedBefore{
+                        Score -= 1
+                    }
                 }
                 cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = nil
