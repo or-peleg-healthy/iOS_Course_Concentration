@@ -12,11 +12,6 @@ class ViewController: UIViewController {
     lazy var game = Concentration_Demo(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
     // lazy var cant use didSet
     
-//    var flipCount = 0 {
-//        didSet{
-//            flipCountLabel.text = "Flips: \(flipCount)"
-//        }
-//    }
     @IBOutlet weak var flipCountLabel: UILabel!
     
     @IBOutlet weak var ScoreLabel: UILabel!
@@ -49,7 +44,6 @@ class ViewController: UIViewController {
         }else{
             print("chosen card is not in card buttons")
         }
-        
     }
     
     var emojiChoices = Theme.getRandomTheme()
