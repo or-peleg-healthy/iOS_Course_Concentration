@@ -30,16 +30,21 @@ class Concentration_Demo
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
                     Matches += 1
+                    Score += 2
                     if Matches == NumberOfPairs{
                         isGameOver = true
-                        Score += Matches * 2
                     }
                 }
                 else
                 {
+                    if cards[matchIndex].wasFlippedBefore{
+                        Score -= 1
+                    }
                     if cards[index].wasFlippedBefore{
                         Score -= 1
                     }
+                    cards[index].wasFlippedBefore = true
+                    cards[matchIndex].wasFlippedBefore = true
                 }
                 cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = nil
@@ -52,7 +57,6 @@ class Concentration_Demo
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
-        cards[index].wasFlippedBefore = true
         return (WasAlreadyFacedup, isGameOver, Flips, Score)
     }
     init(numberOfPairsOfCards: Int){
