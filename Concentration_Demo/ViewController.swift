@@ -12,22 +12,38 @@ class ViewController: UIViewController {
     lazy var game = Concentration_Demo(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
     // lazy var cant use didSet
     
-    var flipCount = 0 {
-        didSet{
-            flipCountLabel.text = "Flips: \(flipCount)"
-        }
-    }
+//    var flipCount = 0 {
+//        didSet{
+//            flipCountLabel.text = "Flips: \(flipCount)"
+//        }
+//    }
     @IBOutlet weak var flipCountLabel: UILabel!
+    
+    @IBOutlet weak var ScoreLabel: UILabel!
     
     @IBOutlet var cardButtons: [UIButton]!
     
+    @IBAction func NewGame(_ sender: UIButton) {
+        game = Concentration_Demo(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+        emojiChoices = ["👻", "🧠", "👽", "🫁", "💩", "🫀", "👣", "🫦", "🦷", "👃🏻"]
+        ScoreLabel.text = ""
+        flipCountLabel.text = "Flips :0"
+        for button in cardButtons{
+            button.isEnabled = true
+        }
+        updateViewFromModel()
+    }
     
     // MARK: Handle Card Touch Behavior
     
     @IBAction func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.firstIndex(of: sender){
-            if !game.chooseCard(at: cardNumber){
-                flipCount += 1
+            let (WasFaceUp,isGameOver, flips, result) = game.chooseCard(at: cardNumber)
+            if !WasFaceUp{
+                flipCountLabel.text = "Flips :\(flips)"
+            }
+            if isGameOver{
+                ScoreLabel.text = "Score :\(result)"
             }
             updateViewFromModel()
         }else{
@@ -36,7 +52,8 @@ class ViewController: UIViewController {
         
     }
     
-    var emojiChoices = ["👻", "🧠", "👽", "🫁", "💩", "🫀", "👣", "🫦", "🦷", "👃🏻"]
+    var emojiChoices = Theme.getRandomTheme()
+//    var emojiChoices = ["👻", "🧠", "👽", "🫁", "💩", "🫀", "👣", "🫦", "🦷", "👃🏻"]
     
     var emoji_dict = [Int:String]()
     
