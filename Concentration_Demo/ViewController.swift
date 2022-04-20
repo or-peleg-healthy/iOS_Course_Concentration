@@ -16,7 +16,11 @@ class ViewController: UIViewController {
         return (cardButtons.count + 1) / 2
     } // Computed variable is a read only so no-need get
     
-    @IBOutlet private(set) weak var flipCountLabel: UILabel!
+    @IBOutlet private(set) weak var flipCountLabel: UILabel! {
+        didSet {
+            updateFlipCountLabel(Flips: 0)
+        }
+    }
     
     @IBOutlet private weak var ScoreLabel: UILabel!
     
@@ -39,11 +43,7 @@ class ViewController: UIViewController {
         if let cardNumber = cardButtons.firstIndex(of: sender){
             let (WasFaceUp,isGameOver, flips, result) = game.chooseCard(at: cardNumber)
             if !WasFaceUp{
-                let attributes: [NSAttributedString.Key: Any] = [
-                    .strokeWidth: 5.0,
-                    .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)]
-                let attributedString = NSAttributedString(string: "Flips \(flips)", attributes: attributes)
-                flipCountLabel.attributedText = attributedString
+                updateFlipCountLabel(Flips: flips)
             }
             if isGameOver{
                 ScoreLabel.text = "Score :\(result)"
@@ -58,6 +58,13 @@ class ViewController: UIViewController {
     
     private var emoji_dict = [Card:String]()
     
+    func updateFlipCountLabel(Flips: Int) {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)]
+        let attributedString = NSAttributedString(string: "Flips \(Flips)", attributes: attributes)
+        flipCountLabel.attributedText = attributedString
+    }
     private func updateViewFromModel(){
         for index in cardButtons.indices {
             let button = cardButtons[index]

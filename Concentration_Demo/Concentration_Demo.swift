@@ -38,11 +38,13 @@ struct Concentration_Demo
     private var isGameOver = false
     
     mutating func chooseCard(at index: Int) -> (WasFaceUp:Bool,isGameOver:Bool, Flips:Int, Score:Int) {
-        assert(cards.indices.contains(index), "Concecntration_Demo.chooseCard(at: \(index)) : choosen inedx not in the cards")
-        Flips += 1
+        assert(cards.indices.contains(index), "Concecntration_Demo.chooseCard(at: \(index)) : choosen index not in the cards")
         var WasAlreadyFacedup = false
         if cards[index].isFaceUp == true{
             WasAlreadyFacedup = true
+        }
+        else{
+            Flips += 1
         }
         if !cards[index].isMatched{
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
