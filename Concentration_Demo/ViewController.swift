@@ -9,8 +9,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    lazy var game = Concentration_Demo(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+    lazy var game = Concentration_Demo(numberOfPairsOfCards: numberOfPairsOfCards)
     // lazy var cant use didSet
+    
+    var numberOfPairsOfCards: Int {
+        return (cardButtons.count + 1) / 2
+    } // Computer variable is a read only so no-need get
     
     @IBOutlet weak var flipCountLabel: UILabel!
     

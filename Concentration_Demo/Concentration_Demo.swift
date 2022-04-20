@@ -14,7 +14,26 @@ class Concentration_Demo
     var Matches = 0
     var Flips = 0
     var Score = 0
-    var indexOfOneAndOnlyFaceUpCard: Int?
+    var indexOfOneAndOnlyFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices{
+                if cards[index].isFaceUp {
+                    if foundIndex == nil{
+                        foundIndex = index
+                    } else {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set {
+            for index in cards.indices{
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
     let NumberOfPairs: Int?
     var isGameOver = false
     
@@ -47,13 +66,8 @@ class Concentration_Demo
                     cards[matchIndex].wasFlippedBefore = true
                 }
                 cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
             }
             else{
-                for flipDownIndex in cards.indices {
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
