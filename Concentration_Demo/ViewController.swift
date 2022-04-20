@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     
     private var emojiChoices = Theme.getRandomTheme()
     
-    private var emoji_dict = [Int:String]()
+    private var emoji_dict = [Card:String]()
     
     private func updateViewFromModel(){
         for index in cardButtons.indices {
@@ -72,12 +72,12 @@ class ViewController: UIViewController {
         }
         
         func emoji(for card: Card) -> String {
-            if emoji_dict[card.identifier] == nil {
+            if emoji_dict[card] == nil {
                 if emojiChoices.count > 0 {
-                    emoji_dict[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+                    emoji_dict[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
                 }
             }
-            return emoji_dict[card.identifier] ?? "?"
+            return emoji_dict[card] ?? "?"
         }
     }
 }

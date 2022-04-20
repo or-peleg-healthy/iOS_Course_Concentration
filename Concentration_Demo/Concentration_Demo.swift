@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class Concentration_Demo
+struct Concentration_Demo
 {
     private(set) var cards = [Card]()
     private var Matches = 0
@@ -37,7 +37,7 @@ class Concentration_Demo
     private let NumberOfPairs: Int?
     private var isGameOver = false
     
-    func chooseCard(at index: Int) -> (WasFaceUp:Bool,isGameOver:Bool, Flips:Int, Score:Int) {
+    mutating func chooseCard(at index: Int) -> (WasFaceUp:Bool,isGameOver:Bool, Flips:Int, Score:Int) {
         assert(cards.indices.contains(index), "Concecntration_Demo.chooseCard(at: \(index)) : choosen inedx not in the cards")
         Flips += 1
         var WasAlreadyFacedup = false
@@ -46,7 +46,7 @@ class Concentration_Demo
         }
         if !cards[index].isMatched{
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
-                if cards[matchIndex].identifier == cards[index].identifier{
+                if cards[matchIndex] == cards[index]{
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
                     Matches += 1
@@ -74,6 +74,7 @@ class Concentration_Demo
         }
         return (WasAlreadyFacedup, isGameOver, Flips, Score)
     }
+    
     init(numberOfPairsOfCards: Int){
         assert(numberOfPairsOfCards > 0, "Concecntration_Demo.init(\(numberOfPairsOfCards)) : must have at least one pair of cards")
         self.NumberOfPairs = numberOfPairsOfCards
