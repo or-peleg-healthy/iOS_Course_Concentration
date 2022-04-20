@@ -74,11 +74,23 @@ class ViewController: UIViewController {
         func emoji(for card: Card) -> String {
             if emoji_dict[card.identifier] == nil {
                 if emojiChoices.count > 0 {
-                    let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
-                    emoji_dict[card.identifier] = emojiChoices.remove(at: randomIndex)
+                    emoji_dict[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
                 }
             }
             return emoji_dict[card.identifier] ?? "?"
+        }
+    }
+}
+
+extension Int {
+    var arc4random: Int{
+        if self > 0 {
+        return Int(arc4random_uniform(UInt32(self)))
+        } else if self < 0 {
+            return -Int(arc4random_uniform(UInt32(abs(self))))
+        }
+        else {
+            return 0
         }
     }
 }
