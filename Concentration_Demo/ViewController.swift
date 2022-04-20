@@ -39,7 +39,11 @@ class ViewController: UIViewController {
         if let cardNumber = cardButtons.firstIndex(of: sender){
             let (WasFaceUp,isGameOver, flips, result) = game.chooseCard(at: cardNumber)
             if !WasFaceUp{
-                flipCountLabel.text = "Flips :\(flips)"
+                let attributes: [NSAttributedString.Key: Any] = [
+                    .strokeWidth: 5.0,
+                    .strokeColor: #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)]
+                let attributedString = NSAttributedString(string: "Flips \(flips)", attributes: attributes)
+                flipCountLabel.attributedText = attributedString
             }
             if isGameOver{
                 ScoreLabel.text = "Score :\(result)"
