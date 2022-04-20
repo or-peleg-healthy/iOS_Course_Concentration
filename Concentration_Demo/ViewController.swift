@@ -9,20 +9,20 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    lazy var game = Concentration_Demo(numberOfPairsOfCards: numberOfPairsOfCards)
+    private lazy var game = Concentration_Demo(numberOfPairsOfCards: numberOfPairsOfCards)
     // lazy var cant use didSet
     
     var numberOfPairsOfCards: Int {
         return (cardButtons.count + 1) / 2
-    } // Computer variable is a read only so no-need get
+    } // Computed variable is a read only so no-need get
     
-    @IBOutlet weak var flipCountLabel: UILabel!
+    @IBOutlet private(set) weak var flipCountLabel: UILabel!
     
-    @IBOutlet weak var ScoreLabel: UILabel!
+    @IBOutlet private weak var ScoreLabel: UILabel!
     
-    @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet private var cardButtons: [UIButton]!
     
-    @IBAction func NewGame(_ sender: UIButton) {
+    @IBAction private func NewGame(_ sender: UIButton) {
         game = Concentration_Demo(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
         emojiChoices = Theme.getRandomTheme()
         ScoreLabel.text = ""
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     
     // MARK: Handle Card Touch Behavior
     
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBAction private func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.firstIndex(of: sender){
             let (WasFaceUp,isGameOver, flips, result) = game.chooseCard(at: cardNumber)
             if !WasFaceUp{
@@ -50,11 +50,11 @@ class ViewController: UIViewController {
         }
     }
     
-    var emojiChoices = Theme.getRandomTheme()
+    private var emojiChoices = Theme.getRandomTheme()
     
-    var emoji_dict = [Int:String]()
+    private var emoji_dict = [Int:String]()
     
-    func updateViewFromModel(){
+    private func updateViewFromModel(){
         for index in cardButtons.indices {
             let button = cardButtons[index]
             let card = game.cards[index]

@@ -10,11 +10,11 @@ import UIKit
 
 class Concentration_Demo
 {
-    var cards = [Card]()
-    var Matches = 0
-    var Flips = 0
-    var Score = 0
-    var indexOfOneAndOnlyFaceUpCard: Int? {
+    private(set) var cards = [Card]()
+    private var Matches = 0
+    private var Flips = 0
+    private var Score = 0
+    private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
             var foundIndex: Int?
             for index in cards.indices{
@@ -34,10 +34,11 @@ class Concentration_Demo
             }
         }
     }
-    let NumberOfPairs: Int?
-    var isGameOver = false
+    private let NumberOfPairs: Int?
+    private var isGameOver = false
     
     func chooseCard(at index: Int) -> (WasFaceUp:Bool,isGameOver:Bool, Flips:Int, Score:Int) {
+        assert(cards.indices.contains(index), "Concecntration_Demo.chooseCard(at: \(index)) : choosen inedx not in the cards")
         Flips += 1
         var WasAlreadyFacedup = false
         if cards[index].isFaceUp == true{
@@ -74,6 +75,7 @@ class Concentration_Demo
         return (WasAlreadyFacedup, isGameOver, Flips, Score)
     }
     init(numberOfPairsOfCards: Int){
+        assert(numberOfPairsOfCards > 0, "Concecntration_Demo.init(\(numberOfPairsOfCards)) : must have at least one pair of cards")
         self.NumberOfPairs = numberOfPairsOfCards
         for _ in 1...numberOfPairsOfCards{
             let card = Card()
